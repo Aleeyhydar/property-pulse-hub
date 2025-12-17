@@ -224,6 +224,50 @@ const Index = () => {
         </div>
       </section>
 
+      {/* Trust Statement Section */}
+      <section className="section-padding bg-background">
+        <div className="container-wide">
+          <div className="max-w-4xl mx-auto text-center">
+            <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full mb-6">
+              <span className="w-2 h-2 bg-primary rounded-full animate-pulse" />
+              <span className="text-sm font-medium">Committed to Excellence</span>
+            </div>
+            <blockquote className="text-2xl md:text-3xl lg:text-4xl font-semibold text-foreground leading-relaxed mb-8">
+              "We don't just build properties — we build <span className="text-primary">lasting relationships</span> and <span className="text-primary">sustainable futures</span> for generations to come."
+            </blockquote>
+            <div className="flex items-center justify-center gap-8 flex-wrap">
+              <div className="flex items-center gap-3">
+                <div className="w-12 h-12 bg-muted rounded-full flex items-center justify-center">
+                  <Shield className="h-6 w-6 text-primary" />
+                </div>
+                <div className="text-left">
+                  <p className="font-semibold text-foreground">Verified</p>
+                  <p className="text-sm text-muted-foreground">& Licensed</p>
+                </div>
+              </div>
+              <div className="flex items-center gap-3">
+                <div className="w-12 h-12 bg-muted rounded-full flex items-center justify-center">
+                  <Handshake className="h-6 w-6 text-primary" />
+                </div>
+                <div className="text-left">
+                  <p className="font-semibold text-foreground">Trusted</p>
+                  <p className="text-sm text-muted-foreground">Partnerships</p>
+                </div>
+              </div>
+              <div className="flex items-center gap-3">
+                <div className="w-12 h-12 bg-muted rounded-full flex items-center justify-center">
+                  <Target className="h-6 w-6 text-primary" />
+                </div>
+                <div className="text-left">
+                  <p className="font-semibold text-foreground">Goal</p>
+                  <p className="text-sm text-muted-foreground">Oriented</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Why Choose Us */}
       <section className="section-padding bg-gradient-to-br from-primary to-primary/80">
         <div className="container-wide">
