@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { ArrowRight, Shield, Target, TrendingUp, Handshake, Leaf } from "lucide-react";
+import { ArrowRight, Shield, Target, TrendingUp, Handshake, Leaf, MessageSquare, PenTool, HardHat, CheckCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Layout } from "@/components/layout/Layout";
 import { PropertyRequestModal } from "@/components/PropertyRequestModal";
@@ -224,46 +224,35 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Trust Statement Section */}
-      <section className="section-padding bg-background">
+      {/* How We Work Section */}
+      <section className="section-padding bg-muted/30">
         <div className="container-wide">
-          <div className="max-w-4xl mx-auto text-center">
-            <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full mb-6">
-              <span className="w-2 h-2 bg-primary rounded-full animate-pulse" />
-              <span className="text-sm font-medium">Committed to Excellence</span>
-            </div>
-            <blockquote className="text-2xl md:text-3xl lg:text-4xl font-semibold text-foreground leading-relaxed mb-8">
-              "We don't just build properties — we build <span className="text-primary">lasting relationships</span> and <span className="text-primary">sustainable futures</span> for generations to come."
-            </blockquote>
-            <div className="flex items-center justify-center gap-8 flex-wrap">
-              <div className="flex items-center gap-3">
-                <div className="w-12 h-12 bg-muted rounded-full flex items-center justify-center">
-                  <Shield className="h-6 w-6 text-primary" />
+          <SectionHeader
+            subtitle="Our Process"
+            title="How We Work"
+            description="A seamless journey from consultation to completion."
+          />
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {[
+              { icon: MessageSquare, step: "01", title: "Consult & Assess", desc: "We listen to your needs and evaluate requirements." },
+              { icon: PenTool, step: "02", title: "Plan & Design", desc: "Custom strategies and designs tailored for you." },
+              { icon: HardHat, step: "03", title: "Build & Manage", desc: "Expert execution with quality at every stage." },
+              { icon: CheckCircle, step: "04", title: "Deliver & Support", desc: "Seamless handover with ongoing assistance." },
+            ].map((item, index) => (
+              <div
+                key={index}
+                className="group relative bg-background rounded-2xl p-6 shadow-sm border border-border/50 hover:shadow-lg hover:border-primary/30 transition-all duration-300"
+              >
+                <div className="absolute -top-3 -right-3 w-10 h-10 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold shadow-md">
+                  {item.step}
                 </div>
-                <div className="text-left">
-                  <p className="font-semibold text-foreground">Verified</p>
-                  <p className="text-sm text-muted-foreground">& Licensed</p>
+                <div className="w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">
+                  <item.icon className="h-7 w-7 text-primary" />
                 </div>
+                <h3 className="text-lg font-semibold text-foreground mb-2">{item.title}</h3>
+                <p className="text-sm text-muted-foreground leading-relaxed">{item.desc}</p>
               </div>
-              <div className="flex items-center gap-3">
-                <div className="w-12 h-12 bg-muted rounded-full flex items-center justify-center">
-                  <Handshake className="h-6 w-6 text-primary" />
-                </div>
-                <div className="text-left">
-                  <p className="font-semibold text-foreground">Trusted</p>
-                  <p className="text-sm text-muted-foreground">Partnerships</p>
-                </div>
-              </div>
-              <div className="flex items-center gap-3">
-                <div className="w-12 h-12 bg-muted rounded-full flex items-center justify-center">
-                  <Target className="h-6 w-6 text-primary" />
-                </div>
-                <div className="text-left">
-                  <p className="font-semibold text-foreground">Goal</p>
-                  <p className="text-sm text-muted-foreground">Oriented</p>
-                </div>
-              </div>
-            </div>
+            ))}
           </div>
         </div>
       </section>
