@@ -4,7 +4,7 @@ import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Layout } from "@/components/layout/Layout";
 import { PropertyRequestModal } from "@/components/PropertyRequestModal";
-import { PropertyRequestForm } from "@/components/forms/PropertyRequestForm";
+
 import { MarketDashboard } from "@/components/MarketDashboard";
 import { ServiceCard } from "@/components/cards/ServiceCard";
 import { ProjectCard } from "@/components/cards/ProjectCard";
@@ -56,17 +56,42 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Property Request Form Section */}
+      {/* About Teaser Section */}
       <section className="section-padding bg-muted/30">
         <div className="container-wide">
-          <div className="max-w-3xl mx-auto">
-            <SectionHeader
-              subtitle="Start Your Search"
-              title="Find Your Perfect Property"
-              description="Tell us what you're looking for and our expert team will match you with the ideal property."
-            />
-            <div className="bg-card rounded-2xl p-8 shadow-lg border border-border">
-              <PropertyRequestForm embedded />
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div>
+              <p className="text-primary font-medium mb-2">About Bunian</p>
+              <h2 className="text-3xl md:text-4xl font-bold mb-4">
+                Your Trusted Partner in Property & Agriculture
+              </h2>
+              <p className="text-muted-foreground text-lg mb-6">
+                With over {companyInfo.stats.yearsExperience} years of experience, Bunian has established itself as a leader in premium real estate development, sustainable agriculture, and strategic investment advisory across Nigeria.
+              </p>
+              <div className="grid grid-cols-2 gap-6 mb-6">
+                <div>
+                  <p className="text-3xl font-bold text-primary">{companyInfo.stats.projectsCompleted}+</p>
+                  <p className="text-muted-foreground">Projects Completed</p>
+                </div>
+                <div>
+                  <p className="text-3xl font-bold text-primary">{companyInfo.stats.satisfiedClients}+</p>
+                  <p className="text-muted-foreground">Happy Clients</p>
+                </div>
+              </div>
+              <Button variant="outline" asChild>
+                <Link to="/about">Learn More About Us <ArrowRight className="ml-2 h-4 w-4" /></Link>
+              </Button>
+            </div>
+            <div className="relative">
+              <img
+                src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=800&q=80"
+                alt="Modern building architecture"
+                className="rounded-2xl shadow-xl w-full h-[400px] object-cover"
+              />
+              <div className="absolute -bottom-6 -left-6 bg-primary text-primary-foreground p-6 rounded-xl shadow-lg">
+                <p className="text-4xl font-bold">{companyInfo.stats.yearsExperience}+</p>
+                <p className="text-sm">Years of Excellence</p>
+              </div>
             </div>
           </div>
         </div>
