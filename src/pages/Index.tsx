@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Shield, Target, TrendingUp, Handshake } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Layout } from "@/components/layout/Layout";
 import { PropertyRequestModal } from "@/components/PropertyRequestModal";
@@ -9,7 +9,7 @@ import { MarketDashboard } from "@/components/MarketDashboard";
 import { ServiceCard } from "@/components/cards/ServiceCard";
 import { ProjectCard } from "@/components/cards/ProjectCard";
 import { TestimonialCard } from "@/components/cards/TestimonialCard";
-import { StatCard } from "@/components/cards/StatCard";
+
 import { ProjectDetailModal } from "@/components/ProjectDetailModal";
 import { SectionHeader } from "@/components/sections/SectionHeader";
 import { realEstateServices } from "@/data/services";
@@ -153,18 +153,42 @@ const Index = () => {
       </section>
 
       {/* Why Choose Us */}
-      <section className="section-padding bg-primary text-primary-foreground">
+      <section className="section-padding bg-gradient-to-br from-primary to-primary/80">
         <div className="container-wide">
           <SectionHeader
             title="Why Choose Bunian?"
-            description="Trusted by hundreds of clients across Nigeria."
+            description="We deliver excellence through expertise, transparency, and dedication."
             className="text-primary-foreground [&_p]:text-primary-foreground/80"
           />
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            <StatCard value={companyInfo.stats.yearsExperience} label="Years Experience" suffix="+" />
-            <StatCard value={companyInfo.stats.projectsCompleted} label="Projects Completed" suffix="+" />
-            <StatCard value={companyInfo.stats.satisfiedClients} label="Satisfied Clients" suffix="+" />
-            <StatCard value={companyInfo.stats.teamMembers} label="Team Members" suffix="+" />
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 text-center border border-white/20 hover:bg-white/20 transition-colors">
+              <div className="w-14 h-14 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Shield className="h-7 w-7 text-primary-foreground" />
+              </div>
+              <h3 className="text-lg font-semibold text-primary-foreground mb-2">Trusted Expertise</h3>
+              <p className="text-primary-foreground/70 text-sm">Decades of experience in Nigerian real estate with proven track record.</p>
+            </div>
+            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 text-center border border-white/20 hover:bg-white/20 transition-colors">
+              <div className="w-14 h-14 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Target className="h-7 w-7 text-primary-foreground" />
+              </div>
+              <h3 className="text-lg font-semibold text-primary-foreground mb-2">Tailored Solutions</h3>
+              <p className="text-primary-foreground/70 text-sm">Personalized service to match your unique property and investment goals.</p>
+            </div>
+            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 text-center border border-white/20 hover:bg-white/20 transition-colors">
+              <div className="w-14 h-14 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                <TrendingUp className="h-7 w-7 text-primary-foreground" />
+              </div>
+              <h3 className="text-lg font-semibold text-primary-foreground mb-2">Market Insights</h3>
+              <p className="text-primary-foreground/70 text-sm">Real-time market intelligence to help you make informed decisions.</p>
+            </div>
+            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 text-center border border-white/20 hover:bg-white/20 transition-colors">
+              <div className="w-14 h-14 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Handshake className="h-7 w-7 text-primary-foreground" />
+              </div>
+              <h3 className="text-lg font-semibold text-primary-foreground mb-2">End-to-End Support</h3>
+              <p className="text-primary-foreground/70 text-sm">From search to settlement, we guide you through every step.</p>
+            </div>
           </div>
         </div>
       </section>
