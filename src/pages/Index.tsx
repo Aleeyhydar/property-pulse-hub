@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { ArrowRight, Shield, Target, TrendingUp, Handshake } from "lucide-react";
+import { ArrowRight, Shield, Target, TrendingUp, Handshake, Leaf } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Layout } from "@/components/layout/Layout";
 import { PropertyRequestModal } from "@/components/PropertyRequestModal";
@@ -15,6 +15,7 @@ import { SectionHeader } from "@/components/sections/SectionHeader";
 import { realEstateServices } from "@/data/services";
 import { getFeaturedProjects, type Project } from "@/data/projects";
 import { testimonials } from "@/data/testimonials";
+import { agricultureProjects } from "@/data/agricultureProjects";
 import { companyInfo } from "@/data/companyInfo";
 
 const Index = () => {
@@ -148,6 +149,77 @@ const Index = () => {
                 View All Projects <ArrowRight className="ml-2 h-4 w-4" />
               </Link>
             </Button>
+          </div>
+        </div>
+      </section>
+
+      {/* Agriculture Section */}
+      <section className="section-padding bg-gradient-to-br from-green-900 to-green-800 text-white overflow-hidden">
+        <div className="container-wide">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div>
+              <div className="flex items-center gap-2 mb-4">
+                <Leaf className="h-5 w-5 text-green-300" />
+                <span className="text-green-300 font-medium">Agriculture Division</span>
+              </div>
+              <h2 className="text-3xl md:text-4xl font-bold mb-4">
+                Growing Nigeria's Future
+              </h2>
+              <p className="text-white/80 text-lg mb-6">
+                Beyond real estate, Bunian is committed to sustainable agriculture. Our farms and processing facilities contribute to food security while creating employment opportunities across Nigeria.
+              </p>
+              <div className="grid grid-cols-3 gap-6 mb-8">
+                <div>
+                  <p className="text-3xl font-bold text-green-300">500+</p>
+                  <p className="text-white/70 text-sm">Hectares Cultivated</p>
+                </div>
+                <div>
+                  <p className="text-3xl font-bold text-green-300">4</p>
+                  <p className="text-white/70 text-sm">Active Projects</p>
+                </div>
+                <div>
+                  <p className="text-3xl font-bold text-green-300">2000+</p>
+                  <p className="text-white/70 text-sm">Farmers Supported</p>
+                </div>
+              </div>
+              <Button size="lg" variant="outline" asChild className="border-white/30 text-white hover:bg-white/10">
+                <Link to="/agriculture">
+                  Explore Agriculture <ArrowRight className="ml-2 h-4 w-4" />
+                </Link>
+              </Button>
+            </div>
+            <div className="relative">
+              <div className="grid grid-cols-2 gap-4">
+                {agricultureProjects.slice(0, 2).map((project) => (
+                  <div key={project.id} className="relative group overflow-hidden rounded-xl">
+                    <img
+                      src={project.image}
+                      alt={project.title}
+                      className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
+                    <div className="absolute bottom-3 left-3 right-3">
+                      <p className="text-white font-semibold text-sm">{project.title}</p>
+                      <p className="text-white/70 text-xs">{project.location}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+              <div className="mt-4">
+                <div className="relative group overflow-hidden rounded-xl">
+                  <img
+                    src={agricultureProjects[2]?.image || "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=800&q=80"}
+                    alt={agricultureProjects[2]?.title || "Agriculture"}
+                    className="w-full h-40 object-cover group-hover:scale-105 transition-transform duration-300"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
+                  <div className="absolute bottom-3 left-3 right-3">
+                    <p className="text-white font-semibold text-sm">{agricultureProjects[2]?.title}</p>
+                    <p className="text-white/70 text-xs">{agricultureProjects[2]?.location}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
