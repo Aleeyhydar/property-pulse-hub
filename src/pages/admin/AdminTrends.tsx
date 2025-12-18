@@ -4,12 +4,10 @@ import { useAdmin } from "@/contexts/AdminContext";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Slider } from "@/components/ui/slider";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
-import { TrendingUp, TrendingDown, Minus, MapPin, BarChart3, Home, Lightbulb, X, Plus } from "lucide-react";
+import { TrendingUp, TrendingDown, Minus, MapPin, Home, X, Plus } from "lucide-react";
 import { MarketTrend } from "@/data/marketTrends";
 
 export default function AdminTrends() {
@@ -17,7 +15,6 @@ export default function AdminTrends() {
   const { toast } = useToast();
   const [formData, setFormData] = useState<MarketTrend>(trends);
   const [newArea, setNewArea] = useState("");
-  const [newInsight, setNewInsight] = useState("");
 
   const handleSave = () => {
     updateTrends(formData);
@@ -41,102 +38,9 @@ export default function AdminTrends() {
     });
   };
 
-  const addInsight = () => {
-    if (newInsight.trim()) {
-      setFormData({
-        ...formData,
-        insights: [...formData.insights, newInsight.trim()]
-      });
-      setNewInsight("");
-    }
-  };
-
-  const removeInsight = (index: number) => {
-    setFormData({
-      ...formData,
-      insights: formData.insights.filter((_, i) => i !== index)
-    });
-  };
-
-  const getMoodIcon = () => {
-    if (formData.marketMood === "bullish") return <TrendingUp className="h-5 w-5 text-green-500" />;
-    if (formData.marketMood === "bearish") return <TrendingDown className="h-5 w-5 text-red-500" />;
-    return <Minus className="h-5 w-5 text-yellow-500" />;
-  };
-
   return (
     <AdminLayout title="Market Trends" description="Update market trend data displayed on the website">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Market Mood */}
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <BarChart3 className="h-5 w-5" />
-              Market Mood
-            </CardTitle>
-            <CardDescription>Set the overall market sentiment indicator</CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-6">
-            <div className="space-y-4">
-              <div className="flex items-center justify-between">
-                <Label>Mood Indicator</Label>
-                <div className="flex items-center gap-2">
-                  {getMoodIcon()}
-                  <span className="font-medium capitalize">{formData.marketMood}</span>
-                </div>
-              </div>
-              <Select 
-                value={formData.marketMood} 
-                onValueChange={(value: "bullish" | "neutral" | "bearish") => 
-                  setFormData({ ...formData, marketMood: value })
-                }
-              >
-                <SelectTrigger>
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="bullish">
-                    <span className="flex items-center gap-2">
-                      <TrendingUp className="h-4 w-4 text-green-500" />
-                      Bullish (Positive)
-                    </span>
-                  </SelectItem>
-                  <SelectItem value="neutral">
-                    <span className="flex items-center gap-2">
-                      <Minus className="h-4 w-4 text-yellow-500" />
-                      Neutral (Stable)
-                    </span>
-                  </SelectItem>
-                  <SelectItem value="bearish">
-                    <span className="flex items-center gap-2">
-                      <TrendingDown className="h-4 w-4 text-red-500" />
-                      Bearish (Negative)
-                    </span>
-                  </SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-
-            <div className="space-y-4">
-              <div className="flex items-center justify-between">
-                <Label>Mood Value</Label>
-                <span className="text-lg font-bold">{formData.marketMoodValue}%</span>
-              </div>
-              <Slider
-                value={[formData.marketMoodValue]}
-                onValueChange={([value]) => setFormData({ ...formData, marketMoodValue: value })}
-                max={100}
-                step={1}
-                className="w-full"
-              />
-              <div className="flex justify-between text-xs text-muted-foreground">
-                <span>Bearish</span>
-                <span>Bullish</span>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
         {/* Most Requested & Budget */}
         <Card>
           <CardHeader>
@@ -263,47 +167,6 @@ export default function AdminTrends() {
             </div>
           </CardContent>
         </Card>
-
-        {/* Market Insights */}
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Lightbulb className="h-5 w-5" />
-              Market Insights
-            </CardTitle>
-            <CardDescription>Key market observations and trends</CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="flex gap-2">
-              <Textarea
-                value={newInsight}
-                onChange={(e) => setNewInsight(e.target.value)}
-                placeholder="Add new insight..."
-                rows={2}
-              />
-              <Button onClick={addInsight} size="icon" className="shrink-0">
-                <Plus className="h-4 w-4" />
-              </Button>
-            </div>
-            
-            <div className="space-y-2">
-              {formData.insights.map((insight, index) => (
-                <div 
-                  key={index}
-                  className="p-3 bg-muted/50 rounded-lg flex items-start justify-between gap-2"
-                >
-                  <p className="text-sm">{insight}</p>
-                  <button 
-                    onClick={() => removeInsight(index)}
-                    className="text-muted-foreground hover:text-destructive transition-colors shrink-0"
-                  >
-                    <X className="h-4 w-4" />
-                  </button>
-                </div>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
       </div>
 
       {/* Save Button */}
@@ -320,16 +183,7 @@ export default function AdminTrends() {
           <CardDescription>How the market dashboard will appear on the website</CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <div className="p-4 bg-muted/50 rounded-lg">
-              <p className="text-xs text-muted-foreground mb-1">Market Mood</p>
-              <div className="flex items-center gap-2">
-                {getMoodIcon()}
-                <span className="font-bold capitalize">{formData.marketMood}</span>
-              </div>
-              <p className="text-xs text-muted-foreground mt-1">{formData.marketMoodValue}% positive</p>
-            </div>
-            
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="p-4 bg-muted/50 rounded-lg">
               <p className="text-xs text-muted-foreground mb-1">Most Requested</p>
               <p className="font-bold">{formData.mostRequestedType}</p>
