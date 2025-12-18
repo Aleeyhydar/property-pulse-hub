@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { MapPin, Phone, Mail, Linkedin, Twitter, Instagram, Facebook } from "lucide-react";
 import { companyInfo } from "@/data/companyInfo";
-import { marketTrends } from "@/data/marketTrends";
+import bunianLogo from "@/assets/bunian-logo.png";
 
 const quickLinks = [
   { name: "Home", href: "/" },
@@ -27,11 +27,12 @@ export const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
           {/* Company Info */}
           <div className="space-y-6">
-            <div className="flex items-center gap-2">
-              <div className="h-10 w-10 rounded-lg bg-primary flex items-center justify-center">
-                <span className="text-primary-foreground font-bold text-xl">B</span>
+            <div className="flex items-center gap-3">
+              <img src={bunianLogo} alt="Bunian Logo" className="h-10 w-10 object-contain" />
+              <div className="flex flex-col">
+                <span className="font-display font-bold text-xl">Bunian</span>
+                <span className="text-[10px] text-secondary-foreground/60 tracking-wide">Real Estate | Agriculture | Investment</span>
               </div>
-              <span className="font-display font-bold text-xl">Bunian</span>
             </div>
             <p className="text-secondary-foreground/80 text-sm leading-relaxed">
               {companyInfo.description}
@@ -138,18 +139,6 @@ export const Footer = () => {
           </div>
         </div>
 
-        {/* Market Insight */}
-        <div className="mt-12 pt-8 border-t border-secondary-foreground/10">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-            <div className="text-sm text-secondary-foreground/60">
-              <span className="text-primary font-medium">Market Insight:</span>{" "}
-              {marketTrends.insights[0]}
-            </div>
-            <div className="text-sm text-secondary-foreground/60">
-              Last updated: {marketTrends.lastUpdated}
-            </div>
-          </div>
-        </div>
       </div>
 
       {/* Copyright */}

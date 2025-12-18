@@ -3,6 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import { Menu, X, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import bunianLogo from "@/assets/bunian-logo.png";
 
 const navigation = [
   { name: "Home", href: "/" },
@@ -21,11 +22,12 @@ export const Header = () => {
     <header className="fixed top-0 left-0 right-0 z-50 glass">
       <nav className="container-wide flex items-center justify-between py-4">
         {/* Logo */}
-        <Link to="/" className="flex items-center gap-2">
-          <div className="h-10 w-10 rounded-lg bg-primary flex items-center justify-center">
-            <span className="text-primary-foreground font-bold text-xl">B</span>
+        <Link to="/" className="flex items-center gap-3">
+          <img src={bunianLogo} alt="Bunian Logo" className="h-10 w-10 object-contain" />
+          <div className="flex flex-col">
+            <span className="font-display font-bold text-xl text-foreground leading-tight">Bunian</span>
+            <span className="text-[10px] text-muted-foreground tracking-wide">Real Estate | Agriculture | Investment</span>
           </div>
-          <span className="font-display font-bold text-xl text-foreground">Bunian</span>
         </Link>
 
         {/* Desktop Navigation */}

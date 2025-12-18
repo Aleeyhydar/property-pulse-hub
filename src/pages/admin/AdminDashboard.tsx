@@ -112,25 +112,9 @@ export default function AdminDashboard() {
           <CardContent>
             <div className="space-y-4">
               <div className="p-3 bg-muted/50 rounded-lg">
-                <div className="flex items-center justify-between mb-2">
-                  <span className="text-sm text-muted-foreground">Market Mood</span>
-                  <span className={`px-2 py-1 rounded-full text-xs font-medium ${
-                    trends.marketMood === "bullish" 
-                      ? "bg-green-500/10 text-green-500"
-                      : trends.marketMood === "bearish"
-                      ? "bg-red-500/10 text-red-500"
-                      : "bg-yellow-500/10 text-yellow-500"
-                  }`}>
-                    {trends.marketMood}
-                  </span>
-                </div>
-                <div className="w-full bg-muted rounded-full h-2">
-                  <div 
-                    className="bg-primary rounded-full h-2 transition-all"
-                    style={{ width: `${trends.marketMoodValue}%` }}
-                  />
-                </div>
-                <p className="text-xs text-muted-foreground mt-1">{trends.marketMoodValue}% positive sentiment</p>
+                <span className="text-sm text-muted-foreground">Budget Range</span>
+                <p className="font-medium mt-1">{trends.averageBudget.min} - {trends.averageBudget.max}</p>
+                <p className="text-xs text-muted-foreground mt-1 capitalize">Trend: {trends.averageBudget.trend}</p>
               </div>
 
               <div className="p-3 bg-muted/50 rounded-lg">
