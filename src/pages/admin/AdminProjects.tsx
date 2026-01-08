@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { AdminLayout } from "@/components/admin/AdminLayout";
 import { useAdmin } from "@/contexts/AdminContext";
 import { Button } from "@/components/ui/button";
@@ -11,7 +11,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { useToast } from "@/hooks/use-toast";
-import { Plus, Pencil, Trash2, Star } from "lucide-react";
+import { Plus, Pencil, Trash2, Star, ImagePlus, X } from "lucide-react";
 import { Project } from "@/data/projects";
 
 export default function AdminProjects() {
@@ -19,6 +19,8 @@ export default function AdminProjects() {
   const { toast } = useToast();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [editingProject, setEditingProject] = useState<Project | null>(null);
+  const [projectImages, setProjectImages] = useState<string[]>([]);
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const [formData, setFormData] = useState<Partial<Project>>({
     title: "",
     description: "",
@@ -57,23 +59,55 @@ export default function AdminProjects() {
         yearCompleted: ""
       }
     });
+    setProjectImages([]);
     setEditingProject(null);
+  };
+
+  const handleImageSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (!files) return;
+
+    Array.from(files).forEach((file) => {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const base64 = reader.result as string;
+        setProjectImages((prev) => [...prev, base64]);
+      };
+      reader.readAsDataURL(file);
+    });
+    
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
+  };
+
+  const removeImage = (index: number) => {
+    setProjectImages((prev) => prev.filter((_, i) => i !== index));
   };
 
   const handleEdit = (project: Project) => {
     setEditingProject(project);
     setFormData(project);
+    const existingImages = [project.image, ...(project.images || [])].filter(Boolean);
+    setProjectImages(existingImages);
     setIsDialogOpen(true);
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
+    const [mainImage, ...additionalImages] = projectImages;
+    const projectData = {
+      ...formData,
+      image: mainImage || "",
+      images: additionalImages
+    };
+    
     if (editingProject) {
-      updateProject(editingProject.id, formData);
+      updateProject(editingProject.id, projectData);
       toast({ title: "Project updated successfully" });
     } else {
-      addProject(formData as Omit<Project, "id">);
+      addProject(projectData as Omit<Project, "id">);
       toast({ title: "Project added successfully" });
     }
     
@@ -183,13 +217,51 @@ export default function AdminProjects() {
                   </div>
                 </div>
 
-                <div className="space-y-2">
-                  <Label>Main Image URL</Label>
-                  <Input 
-                    value={formData.image} 
-                    onChange={(e) => setFormData({ ...formData, image: e.target.value })}
-                    placeholder="https://..."
+                <div className="space-y-3">
+                  <Label>Project Images</Label>
+                  <p className="text-xs text-muted-foreground">First image will be the main image</p>
+                  
+                  <input
+                    ref={fileInputRef}
+                    type="file"
+                    accept="image/*"
+                    multiple
+                    onChange={handleImageSelect}
+                    className="hidden"
                   />
+                  
+                  <div className="grid grid-cols-3 sm:grid-cols-4 gap-2">
+                    {projectImages.map((img, index) => (
+                      <div key={index} className="relative group aspect-square">
+                        <img
+                          src={img}
+                          alt={`Project image ${index + 1}`}
+                          className="w-full h-full object-cover rounded-lg border"
+                        />
+                        {index === 0 && (
+                          <span className="absolute top-1 left-1 bg-primary text-primary-foreground text-[10px] px-1.5 py-0.5 rounded">
+                            Main
+                          </span>
+                        )}
+                        <button
+                          type="button"
+                          onClick={() => removeImage(index)}
+                          className="absolute top-1 right-1 bg-destructive text-destructive-foreground rounded-full p-1 opacity-0 group-hover:opacity-100 transition-opacity"
+                        >
+                          <X className="h-3 w-3" />
+                        </button>
+                      </div>
+                    ))}
+                    
+                    <button
+                      type="button"
+                      onClick={() => fileInputRef.current?.click()}
+                      className="aspect-square border-2 border-dashed rounded-lg flex flex-col items-center justify-center gap-1 text-muted-foreground hover:border-primary hover:text-primary transition-colors"
+                    >
+                      <ImagePlus className="h-6 w-6" />
+                      <span className="text-xs">Add</span>
+                    </button>
+                  </div>
                 </div>
 
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
