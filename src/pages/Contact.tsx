@@ -9,11 +9,19 @@ const Contact = () => {
   return (
     <Layout>
       {/* Hero */}
-      <section className="bg-muted/30 section-padding">
-        <div className="container-wide text-center">
-          <p className="text-primary font-medium text-sm uppercase tracking-wider mb-3">Get in Touch</p>
-          <h1 className="text-4xl md:text-5xl font-bold mb-6">Contact Us</h1>
-          <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+      <section className="relative min-h-[50vh] flex items-center justify-center overflow-hidden">
+        <div className="absolute inset-0 z-0">
+          <img
+            src="https://images.unsplash.com/photo-1423666639041-f56000c27a9a?w=1920&q=80"
+            alt="Contact"
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-hero-gradient" />
+        </div>
+        <div className="container-wide relative z-10 text-center text-white py-20">
+          <p className="text-primary-foreground/80 font-medium mb-4">Get in Touch</p>
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">Contact Us</h1>
+          <p className="text-xl text-primary-foreground/80 max-w-2xl mx-auto">
             Have questions? We'd love to hear from you. Reach out and let's start a conversation.
           </p>
         </div>

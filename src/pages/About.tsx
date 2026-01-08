@@ -111,7 +111,7 @@ const About = () => {
       </section>
 
       {/* Stats */}
-      <section className="section-padding bg-primary text-primary-foreground">
+      <section className="section-padding bg-gradient-to-br from-secondary to-secondary/80 text-white">
         <div className="container-wide">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             <StatCard value={companyInfo.stats.yearsExperience} label="Years Experience" suffix="+" />
