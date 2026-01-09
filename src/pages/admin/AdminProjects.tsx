@@ -31,13 +31,17 @@ export default function AdminProjects() {
     image: "",
     images: [],
     featured: false,
-    specifications: {
-      area: "",
-      bedrooms: undefined,
-      bathrooms: undefined,
-      floors: undefined,
-      yearCompleted: ""
-    }
+        specifications: {
+          area: "",
+          bedrooms: undefined,
+          bathrooms: undefined,
+          floors: undefined,
+          yearCompleted: "",
+          livingArea: "",
+          kitchenArea: "",
+          garageSpaces: undefined,
+          plotSize: ""
+        }
   });
 
   const resetForm = () => {
@@ -51,17 +55,21 @@ export default function AdminProjects() {
       image: "",
       images: [],
       featured: false,
-      specifications: {
-        area: "",
-        bedrooms: undefined,
-        bathrooms: undefined,
-        floors: undefined,
-        yearCompleted: ""
-      }
-    });
-    setProjectImages([]);
-    setEditingProject(null);
-  };
+        specifications: {
+          area: "",
+          bedrooms: undefined,
+          bathrooms: undefined,
+          floors: undefined,
+          yearCompleted: "",
+          livingArea: "",
+          kitchenArea: "",
+          garageSpaces: undefined,
+          plotSize: ""
+        }
+      });
+      setProjectImages([]);
+      setEditingProject(null);
+    };
 
   const handleImageSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
@@ -266,7 +274,7 @@ export default function AdminProjects() {
 
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                   <div className="space-y-2">
-                    <Label>Area</Label>
+                    <Label>Total Area</Label>
                     <Input 
                       value={formData.specifications?.area} 
                       onChange={(e) => setFormData({ 
@@ -276,6 +284,42 @@ export default function AdminProjects() {
                       placeholder="850 sqm"
                     />
                   </div>
+                  <div className="space-y-2">
+                    <Label>Living Area</Label>
+                    <Input 
+                      value={formData.specifications?.livingArea || ""} 
+                      onChange={(e) => setFormData({ 
+                        ...formData, 
+                        specifications: { ...formData.specifications!, livingArea: e.target.value }
+                      })}
+                      placeholder="450 sqm"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label>Kitchen Area</Label>
+                    <Input 
+                      value={formData.specifications?.kitchenArea || ""} 
+                      onChange={(e) => setFormData({ 
+                        ...formData, 
+                        specifications: { ...formData.specifications!, kitchenArea: e.target.value }
+                      })}
+                      placeholder="35 sqm"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label>Plot Size</Label>
+                    <Input 
+                      value={formData.specifications?.plotSize || ""} 
+                      onChange={(e) => setFormData({ 
+                        ...formData, 
+                        specifications: { ...formData.specifications!, plotSize: e.target.value }
+                      })}
+                      placeholder="1200 sqm"
+                    />
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                   <div className="space-y-2">
                     <Label>Bedrooms</Label>
                     <Input 
@@ -299,7 +343,32 @@ export default function AdminProjects() {
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label>Year</Label>
+                    <Label>Garage Spaces</Label>
+                    <Input 
+                      type="number"
+                      value={formData.specifications?.garageSpaces || ""} 
+                      onChange={(e) => setFormData({ 
+                        ...formData, 
+                        specifications: { ...formData.specifications!, garageSpaces: parseInt(e.target.value) || undefined }
+                      })}
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label>Floors</Label>
+                    <Input 
+                      type="number"
+                      value={formData.specifications?.floors || ""} 
+                      onChange={(e) => setFormData({ 
+                        ...formData, 
+                        specifications: { ...formData.specifications!, floors: parseInt(e.target.value) || undefined }
+                      })}
+                    />
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                  <div className="space-y-2">
+                    <Label>Year Completed</Label>
                     <Input 
                       value={formData.specifications?.yearCompleted} 
                       onChange={(e) => setFormData({ 

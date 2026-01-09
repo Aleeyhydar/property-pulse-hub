@@ -1,10 +1,12 @@
+import { useState } from "react";
 import { Layout } from "@/components/layout/Layout";
 import { SectionHeader } from "@/components/sections/SectionHeader";
 import { ServiceCard } from "@/components/cards/ServiceCard";
 import { StatCard } from "@/components/cards/StatCard";
 import { AgricultureContactForm } from "@/components/forms/AgricultureContactForm";
+import { Button } from "@/components/ui/button";
 import { agricultureServices } from "@/data/services";
-import { Leaf, TrendingUp, Shield, Users, Truck, Award } from "lucide-react";
+import { Leaf, TrendingUp, Shield, Users, Truck, Award, ChevronLeft, ChevronRight } from "lucide-react";
 
 const agricultureProjects = [
   { id: "1", title: "Kaduna Rice Farm", type: "Crop Farming", status: "Active", image: "https://images.unsplash.com/photo-1500937386664-56d1dfef3854?w=800&q=80", description: "500-hectare integrated rice farming operation." },
@@ -21,7 +23,20 @@ const whyChooseUs = [
   { icon: Award, title: "Certified Standards", description: "Compliance with international agricultural and food safety standards." },
 ];
 
+const ITEMS_PER_PAGE = 6;
+
 const Agriculture = () => {
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const totalPages = Math.ceil(agricultureProjects.length / ITEMS_PER_PAGE);
+  const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+  const paginatedProjects = agricultureProjects.slice(startIndex, startIndex + ITEMS_PER_PAGE);
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
   return (
     <Layout>
       {/* Hero */}
@@ -79,7 +94,7 @@ const Agriculture = () => {
         <div className="container-wide">
           <SectionHeader subtitle="Our Operations" title="Agriculture Projects" />
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {agricultureProjects.map((project) => (
+            {paginatedProjects.map((project) => (
               <div key={project.id} className="rounded-xl overflow-hidden bg-card border border-border hover-lift">
                 <div className="aspect-[4/3] overflow-hidden">
                   <img src={project.image} alt={project.title} className="w-full h-full object-cover" />
@@ -92,6 +107,40 @@ const Agriculture = () => {
               </div>
             ))}
           </div>
+
+          {/* Pagination */}
+          {totalPages > 1 && (
+            <div className="flex justify-center items-center gap-2 mt-12">
+              <Button
+                variant="outline"
+                size="icon"
+                onClick={() => handlePageChange(currentPage - 1)}
+                disabled={currentPage === 1}
+              >
+                <ChevronLeft className="h-4 w-4" />
+              </Button>
+              
+              {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+                <Button
+                  key={page}
+                  variant={currentPage === page ? "default" : "outline"}
+                  size="icon"
+                  onClick={() => handlePageChange(page)}
+                >
+                  {page}
+                </Button>
+              ))}
+              
+              <Button
+                variant="outline"
+                size="icon"
+                onClick={() => handlePageChange(currentPage + 1)}
+                disabled={currentPage === totalPages}
+              >
+                <ChevronRight className="h-4 w-4" />
+              </Button>
+            </div>
+          )}
         </div>
       </section>
 
