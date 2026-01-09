@@ -5,6 +5,7 @@ import { ProjectDetailModal } from "@/components/ProjectDetailModal";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { projects, type Project } from "@/data/projects";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 const filters = [
   { label: "All", value: "all" },
@@ -12,13 +13,30 @@ const filters = [
   { label: "Commercial", value: "commercial" },
 ];
 
+const ITEMS_PER_PAGE = 6;
+
 const Portfolio = () => {
   const [activeFilter, setActiveFilter] = useState("all");
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+  const [currentPage, setCurrentPage] = useState(1);
 
   const filteredProjects = activeFilter === "all"
     ? projects
     : projects.filter((p) => p.category === activeFilter);
+
+  const totalPages = Math.ceil(filteredProjects.length / ITEMS_PER_PAGE);
+  const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+  const paginatedProjects = filteredProjects.slice(startIndex, startIndex + ITEMS_PER_PAGE);
+
+  const handleFilterChange = (value: string) => {
+    setActiveFilter(value);
+    setCurrentPage(1);
+  };
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
 
   return (
     <Layout>
@@ -50,7 +68,7 @@ const Portfolio = () => {
               <Button
                 key={filter.value}
                 variant={activeFilter === filter.value ? "default" : "outline"}
-                onClick={() => setActiveFilter(filter.value)}
+                onClick={() => handleFilterChange(filter.value)}
                 className={cn(
                   "px-6",
                   activeFilter !== filter.value && "hover:bg-muted"
@@ -63,7 +81,7 @@ const Portfolio = () => {
 
           {/* Projects Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredProjects.map((project) => (
+            {paginatedProjects.map((project) => (
               <ProjectCard
                 key={project.id}
                 project={project}
@@ -75,6 +93,40 @@ const Portfolio = () => {
           {filteredProjects.length === 0 && (
             <div className="text-center py-12">
               <p className="text-muted-foreground">No projects found in this category.</p>
+            </div>
+          )}
+
+          {/* Pagination */}
+          {totalPages > 1 && (
+            <div className="flex justify-center items-center gap-2 mt-12">
+              <Button
+                variant="outline"
+                size="icon"
+                onClick={() => handlePageChange(currentPage - 1)}
+                disabled={currentPage === 1}
+              >
+                <ChevronLeft className="h-4 w-4" />
+              </Button>
+              
+              {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+                <Button
+                  key={page}
+                  variant={currentPage === page ? "default" : "outline"}
+                  size="icon"
+                  onClick={() => handlePageChange(page)}
+                >
+                  {page}
+                </Button>
+              ))}
+              
+              <Button
+                variant="outline"
+                size="icon"
+                onClick={() => handlePageChange(currentPage + 1)}
+                disabled={currentPage === totalPages}
+              >
+                <ChevronRight className="h-4 w-4" />
+              </Button>
             </div>
           )}
         </div>

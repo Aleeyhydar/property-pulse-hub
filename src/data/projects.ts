@@ -15,6 +15,10 @@ export interface Project {
     bathrooms?: number;
     floors?: number;
     yearCompleted: string;
+    livingArea?: string;
+    kitchenArea?: string;
+    garageSpaces?: number;
+    plotSize?: string;
   };
 }
 
